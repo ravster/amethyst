@@ -1,5 +1,5 @@
 ;; Copyright 2011 Ravi Desai
-;; Distributed under the GNU General Public License version 3 or later.
+;; Distributed under the GNU Affero General Public License version 3 or later.
 
 (asdf:defsystem "random-entry"
   :description "Random-entry trade simulator"
