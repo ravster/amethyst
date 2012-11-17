@@ -1,33 +1,12 @@
-// Sending out a query string
+// Parsing a query string
 
 var querystring = require('querystring');
-var http = require('http');
 
-// stringify() adds the & and =
-var post_data = querystring.stringify(
-    {
-	'query' : "bananas",
-	"region" : "Brazil"
-	});
-var postOptions = {
-    host : "google.com",
-    path : "/search",
-    method : "GET",
-    headers : {
-	'Content-Type' : 'application/x-www-form-urlencoded',
-	'Content-Length' : post_data.length
-	}
-    };
+var sampleURL = "http://www.amazon.com/Dark-Back-Time-Javier-Marias/dp/0811215709/refsr_1_1?s=books&ie=UTF8&qid=1327136343&sr=1-1";
 
-var postRequest = http.request(postOptions, function(result){
-    result.setEncoding('utf8');
-    result.on('data', function(chunk){
-	console.log("Response: " + chunk);
-	});
-    });
+var parsedURL = querystring.parse(sampleURL.substring(sampleURL.lastIndexOf("?") + 1));
 
-// write parameters to post body (?)
-postRequest.write(post_data);
-postRequest.end();
+console.log(sampleURL.substring(sampleURL.lastIndexOf("?")));
+console.log(parsedURL);
 
-// I don't thoroughly understand what is happening here.
+// So querystring.parse does nothing more that split things around '=' and '&' signs.
