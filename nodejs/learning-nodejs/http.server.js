@@ -1,37 +1,33 @@
+// Sending out a query string
+
+var querystring = require('querystring');
 var http = require('http');
 
-http.createServer(function(req, res) {
-    res.writeHead(200, {'Content-Type' : 'text/plain'});
-    res.end('Your console contains a result of this example.\n');
-
-    // Create a general emitter.
-    var EventEmitter = require('events').EventEmitter;
-    var ee = new EventEmitter();
-
-    // Make a function that will run when an event is called
-    function callback_once () {
-	console.log('A singular callback.');
+// stringify() adds the & and =
+var post_data = querystring.stringify(
+    {
+	'query' : "bananas",
+	"region" : "Brazil"
+	});
+var postOptions = {
+    host : "google.com",
+    path : "/search",
+    method : "GET",
+    headers : {
+	'Content-Type' : 'application/x-www-form-urlencoded',
+	'Content-Length' : post_data.length
 	}
+    };
 
-    // Another function that will be called.
-    function callback_many() {
-	console.log('Multiple callback.');
-	}
+var postRequest = http.request(postOptions, function(result){
+    result.setEncoding('utf8');
+    result.on('data', function(chunk){
+	console.log("Response: " + chunk);
+	});
+    });
 
-    ee.once("event", callback_once);
-    ee.emit("event");
-    ee.emit('event');
+// write parameters to post body (?)
+postRequest.write(post_data);
+postRequest.end();
 
-    console.log('Moving on to calling the multiple callback.');
-
-    ee.on("event", callback_many); // This overwrites the singular callback.  It is not a stack.  It replaces the previous callback.  This is not a stack.
-    ee.emit('event');
-    ee.emit('event');
-
-    console.log('removing the multiple calls now.');
-
-    ee.removeListener('event', callback_many);
-    ee.emit('event');
-    })
-.listen(8080, 'localhost');
-
+// I don't thoroughly understand what is happening here.
