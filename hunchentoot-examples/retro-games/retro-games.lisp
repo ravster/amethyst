@@ -74,14 +74,14 @@
 	     ,@body))))
 
 ;; Start the hunchentoot listener.  This is the thing that listens for incoming HTTP requests at the specified port.
-(defparameter hunchentoot-listener (make-instance 'hunchentoot:easy-acceptor :port 4242))
+(defparameter hunchentoot-listener (make-instance 'easy-acceptor :port 4242))
 ;; Note: I'm using the EASY-ACCEPTOR version of this.  There is a more general one that a power user can use to tweak things.
 (start hunchentoot-listener)
 
 ;; We now make the handler that takes care of a particular request.
 ;; In the original post, we had to manually make a handler that was manually put into a *dispatch-table* which would call a particular function if a particular URL was called.  And then later in the blog post we make a macro that does all of that for us.
 ;; The DEFINE-EASY-HANDLER macro does all of this for us, so we don't have to worry about that and can focus on making our website.
-(hunchentoot:define-easy-handler (retro-games :uri "/retro-games") ()
+(define-easy-handler (retro-games :uri "/retro-games") ()
     (standard-page
      (:title "Retro Games")
      (:h1 "Vote on your all time favourite retro games!")
@@ -98,13 +98,13 @@
 		(fmt "~A with ~d votes" (name game) (votes game)))))))))
 
 ;; The logic for this handler is the same as the one in the blog-post.
-(hunchentoot:define-easy-handler (vote :uri "/vote") (name)
+(define-easy-handler (vote :uri "/vote") (name)
   "If a game of NAME exists, VOTE-FOR it, and then pass the client back to the retro-games main page."
   (if (game-stored? name)
       (vote-for name))
   (redirect "/retro-games"))
 
-(hunchentoot:define-easy-handler (new-game :uri "/new-game") ()
+(define-easy-handler (new-game :uri "/new-game") ()
   "Page that accepts a new game to be put on the list."
   (standard-page
       (:title "Add a new game")
@@ -123,7 +123,7 @@
 		       :value "Add" 
 		       :class "btn")))))
 
-(hunchentoot:define-easy-handler (game-added :uri "/game-added") (name)
+(define-easy-handler (game-added :uri "/game-added") (name)
   "If the name is valid, add the game to the list of games."
   (unless (or (null name)
 	      (zerop (length name)))

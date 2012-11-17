@@ -7,4 +7,4 @@
   :serial t
   :components ((:file "defpackage")
 	       (:file "dice-game"))
-  :depends-on (:hunchentoot))
+  :depends-on (:hunchentoot :cl-who))

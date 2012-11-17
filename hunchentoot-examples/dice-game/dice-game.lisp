@@ -3,6 +3,7 @@
 
 (in-package :dice-game)
 
+;;; Game logic
 (defparameter die1 nil)
 (defparameter die2 nil)
 
@@ -22,3 +23,9 @@
 		 (t
 		  (+ die1 die2)))))
     (list die1 die2 score)))
+
+;;; Display as website
+
+;; Start an acceptor
+(defparameter h-acceptor (make-instance 'hunchentoot:easy-acceptor :port 4242))
+(start h-acceptor)
