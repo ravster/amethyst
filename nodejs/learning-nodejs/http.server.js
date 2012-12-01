@@ -1,12 +1,15 @@
-// Parsing a query string
+// Episode 1 of nodetuts
 
-var querystring = require('querystring');
+var http = require('http');
 
-var sampleURL = "http://www.amazon.com/Dark-Back-Time-Javier-Marias/dp/0811215709/refsr_1_1?s=books&ie=UTF8&qid=1327136343&sr=1-1";
+var server = http.createServer();
 
-var parsedURL = querystring.parse(sampleURL.substring(sampleURL.lastIndexOf("?") + 1));
+function handleAnyRequest(req, res) {
+  res.writeHead(200, {'content-type':'text/plain'});
+  res.write('Hello World!');
+  res.end();			// Very important.  Server will not send out the response till this happens, so nothing will show on the browser.
+}
 
-console.log(sampleURL.substring(sampleURL.lastIndexOf("?")));
-console.log(parsedURL);
+server.on('request', handleAnyRequest);
 
-// So querystring.parse does nothing more that split things around '=' and '&' signs.
+server.listen(3000);
