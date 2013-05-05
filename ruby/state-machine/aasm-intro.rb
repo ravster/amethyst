@@ -31,4 +31,4 @@ puts a.run
 puts a.running?  # => true
 puts a.sleeping? # => false
 puts a.may_run?  # => false
-puts a.run
+puts a.run       # This throws an exception since we can't start the "run" event when we are already in the "running" state.
