@@ -15,8 +15,8 @@
     <activity
         android:name="com.example.myfirstapp.DisplayMessageActivity"
         android:label="@string/title_activity_display_message"
-        android:parentActivityName="com.example.myfirstapp.MainActivity" >
-      <meta-data
+        android:parentActivityName="com.example.myfirstapp.MainActivity" > <!--Used the default navigation behaviours, like 'up'.-->
+      <meta-data		<!--Default navigation behavriour for android pre-4.1.-->
           android:name="android.support.PARENT_ACTIVITY"
           android:value="com.example.myfirstapp.MainActivity" />
     </activity>

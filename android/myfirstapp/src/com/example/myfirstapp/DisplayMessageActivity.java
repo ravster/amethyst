@@ -11,6 +11,19 @@ public class DisplayMessageActivity extends Activity {
             // Show the Up button in the action bar.
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+	// Get the message from the intent that began this Activity.
+	Intent intent = getIntent();
+	String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+	// Create the text view to display the message
+	TextView textView = new TextView(this); // Why 'this'?
+	textView.setTextSize(40);
+	textView.setText(message);
+
+	// Set the text view as the layout.
+	// Not put the text view in the layout?
+	setContentView(textView);
     }
 
     @Override
