@@ -1,5 +1,5 @@
 public class DisplayMessageActivity extends Activity {
-
+    // is this a comment?
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
