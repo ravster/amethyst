@@ -1,21 +1,16 @@
 # Amethyst
 
-This is a collection of random projects that I have done.
+This is a collection of random projects of mine.  Some of them may grow and spin off into their own repositories.  Most of them will wither on the vine and die off.  This has happened with all the code I did for:
 
-All the programs are ASDF systems in their own right, and are independent of each other, with their own packages.  They are all under the amethyst project since I don't want to make a gajillion repositories.  If you are interested in only particular systems, just download their directories individually.
+- common lisp
+- android
+- clojure
+- java
 
-If you want the history of a particular program, then download the whole repository and then do a `git filter-branch` on it.
+I'm currently on the C train, and so there will be more of that in here.  It helps a great deal that C lends itself so well to 1-2 program files and that's it.  A lot of the systems out there now (java, clojure, nodejs, android, rails) lend themselves to over-architected file hierarchies.  Most programs don't need any of that.
 
-## The programs
-
-* Random-entry
-
-Program that checks the profitability of a trading system that decides on buy-or-sell orders randomly
-
-* Index-webspaces
-
-Program that creates an html-file with links to directories that match a certain criteria.
+Less is more.
 
 ## Misc
 
-Amethyst is the name of one of the binary stars that the planet "Pleasance" orbits.  This is in the Known Space Universe by Larry Niven.  Man-Kzin Wars 11, "Teacher's Pet" by Matthew Joseph Harrington.  There is a research base orbiting the star and my amethyst project could count as research.
+Amethyst is the name of one of the binary stars that the planet "Pleasance" orbits.  This is in the Known Space Universe by Larry Niven.  Man-Kzin Wars 11, "Teacher's Pet" by Matthew Joseph Harrington.  There is a research base orbiting the star and my amethyst project could count as research.  Peace Corben, the protagonist, goes there as a tourist having fun in the name of "work".  This codebase is for my fun.  Productive and educational fun; what a great idea.
