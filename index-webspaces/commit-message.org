@@ -1,2 +1,0 @@
-* Added CL version of the program.
-  This is much longer than the sh-version.  Additionally, it is less easily changed since the criterion for matching are hard-coded instead of options.
