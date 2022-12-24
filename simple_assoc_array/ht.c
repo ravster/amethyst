@@ -1,5 +1,5 @@
 /*
-gcc -o ht_string ht.c
+gcc -g -o ht_string ht.c && ./ht_string a 1 b 2 abc d b 3
 
 This implements a basic associative array using a simple char-array for both
 string keys and values.
@@ -74,7 +74,7 @@ char* ht_get(struct ht_string* ht, char* in) {
 
 int main(int argc, char* argv[]) {
   if ((argc < 3) || (argc % 2 != 1)) {
-    printf("Usage: ./ht_string k1 v1 k2 v2\n");
+    printf("Usage: ./ht_string a 1 b 2 abc d b 3\n");
     exit(1);
   }
 
