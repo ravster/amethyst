@@ -24,9 +24,29 @@ void kvs_print(struct kv_string* kvs, unsigned int count) {
   printf("}\n");
 }
 
+struct kv_string* kvs_find(struct kv_string* kvs, int count, char* in) {
+  for (int i = 0; i < count; i++) {
+    int ret = strcmp(kvs[i].key, in);
+    if (ret == 0) {
+      return &kvs[i];
+    }
+  }
+
+  return NULL;
+}
+
 void kv_set(struct kv_string* kv, char* key, char* val) {
   strcpy(kv->key, key);
   strcpy(kv->val, val);
+}
+
+char* kvs_get(struct kv_string* kvs, int count, char* in) {
+  struct kv_string* found = kvs_find(kvs, count, in);
+  if (found != NULL) {
+    return found->val;
+  }
+
+  return "NOT FOUND";
 }
 
 int main(int argc, char* argv[]) {
@@ -59,4 +79,6 @@ int main(int argc, char* argv[]) {
   }
 
   kvs_print(kvs, count);
+
+  printf("Get the val for key 'abc': %s\n", kvs_get(kvs, count, "abc"));
 }
