@@ -13,30 +13,41 @@ struct kv_string {
   char key[100];
   char val[100];
 };
+struct ht_string {
+  struct kv_string data[16];
+  int count;
+};
 
-void kvs_print(struct kv_string* kvs, unsigned int count) {
-  struct kv_string kv;
+struct ht_string ht_string_new() {
+  struct ht_string* new = malloc(sizeof(struct ht_string));
+  new->count = 0;
+
+  return *new;
+}
+
+void ht_print(struct ht_string* ht) {
+  struct kv_string* kv;
   printf("{\n");
-  for(int i = 0; i < count; i++) {
-    kv = kvs[i];
-    printf("\t%s: %s,\n", kv.key, kv.val);
+  for(int i = 0; i < ht->count; i++) {
+    kv = &ht->data[i];
+    printf("\t%s: %s,\n", kv->key, kv->val);
   }
   printf("}\n");
 }
 
-struct kv_string* kvs_find(struct kv_string* kvs, int count, char* in) {
-  for (int i = 0; i < count; i++) {
-    int ret = strcmp(kvs[i].key, in);
+struct kv_string* ht_find(struct ht_string* ht, char* in) {
+  for (int i = 0; i < ht->count; i++) {
+    int ret = strcmp(ht->data[i].key, in);
     if (ret == 0) {
-      return &kvs[i];
+      return &ht->data[i];
     }
   }
 
   return NULL;
 }
 
-void kvs_set(struct kv_string* kvs, int count, char* key, char* val) {
-  struct kv_string* found = kvs_find(kvs, count, key);
+void ht_set(struct ht_string* ht, char* key, char* val) {
+  struct kv_string* found = ht_find(ht, key);
   if (found != NULL) { // update
     strcpy(found->key, key);
     strcpy(found->val, val);
@@ -44,15 +55,16 @@ void kvs_set(struct kv_string* kvs, int count, char* key, char* val) {
   }
 
   // make new
-  found = &kvs[count];
-    strcpy(found->key, key);
-    strcpy(found->val, val);
+  found = &ht->data[ht->count];
+  strcpy(found->key, key);
+  strcpy(found->val, val);
+  ht->count++;
 
   return;
 }
 
-char* kvs_get(struct kv_string* kvs, int count, char* in) {
-  struct kv_string* found = kvs_find(kvs, count, in);
+char* ht_get(struct ht_string* ht, char* in) {
+  struct kv_string* found = ht_find(ht, in);
   if (found != NULL) {
     return found->val;
   }
@@ -66,8 +78,7 @@ int main(int argc, char* argv[]) {
     exit(1);
   }
 
-  struct kv_string kvs[16];
-  int count = 0;
+  struct ht_string ht = ht_string_new();
 
   for (int i = 1; i < argc; i+= 2) {
     int len = strlen(argv[i]);
@@ -82,12 +93,10 @@ int main(int argc, char* argv[]) {
       exit(2);
     }
 
-    kvs_set(kvs, count, argv[i], argv[i+1]);
-
-    count++;
+    ht_set(&ht, argv[i], argv[i+1]);
   }
 
-  kvs_print(kvs, count);
+  ht_print(&ht);
 
-  printf("Get the val for key 'abc': %s\n", kvs_get(kvs, count, "abc"));
+  printf("Get the val for key 'abc': %s\n", ht_get(&ht, "abc"));
 }
