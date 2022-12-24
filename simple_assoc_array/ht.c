@@ -35,9 +35,20 @@ struct kv_string* kvs_find(struct kv_string* kvs, int count, char* in) {
   return NULL;
 }
 
-void kv_set(struct kv_string* kv, char* key, char* val) {
-  strcpy(kv->key, key);
-  strcpy(kv->val, val);
+void kvs_set(struct kv_string* kvs, int count, char* key, char* val) {
+  struct kv_string* found = kvs_find(kvs, count, key);
+  if (found != NULL) { // update
+    strcpy(found->key, key);
+    strcpy(found->val, val);
+    return;
+  }
+
+  // make new
+  found = &kvs[count];
+    strcpy(found->key, key);
+    strcpy(found->val, val);
+
+  return;
 }
 
 char* kvs_get(struct kv_string* kvs, int count, char* in) {
@@ -59,8 +70,6 @@ int main(int argc, char* argv[]) {
   int count = 0;
 
   for (int i = 1; i < argc; i+= 2) {
-    struct kv_string* kv = &kvs[count];
-
     int len = strlen(argv[i]);
     if (len > 99) {
       printf("Too long:\n%s\n%s %d\n", argv[i], __FILE__, __LINE__);
@@ -73,7 +82,7 @@ int main(int argc, char* argv[]) {
       exit(2);
     }
 
-    kv_set(kv, argv[i], argv[i+1]);
+    kvs_set(kvs, count, argv[i], argv[i+1]);
 
     count++;
   }
